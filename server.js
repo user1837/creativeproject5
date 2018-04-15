@@ -65,7 +65,7 @@ app.put('/api/flashcards/:id', (req, res) => { //colon means that there is numbe
 app.delete('/api/flashcards/:id', (req, res) => {
   let id = parseInt(req.params.id);
   db('cards').where('id', id).del().then(cards => {
-    res.status(200);
+    res.sendStatus(200);
   }).catch(error => {
     res.status(500).json({ error });
   });
