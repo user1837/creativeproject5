@@ -1,0 +1,27 @@
+{
+  "name": "creativeproject5",
+  "version": "1.0.0",
+  "description": "welsh word mutator",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user1837/creativeproject5.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/user1837/creativeproject5/issues"
+  },
+  "homepage": "https://github.com/user1837/creativeproject5#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt": "^2.0.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "knex": "^0.14.6",
+    "mysql": "^2.15.0"
+  }
+}

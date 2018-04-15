@@ -1,0 +1,190 @@
+.header {
+	display: grid;
+	grid-template-columns: 205px auto;
+	grid-column-gap: 5px;
+	margin: 15px;
+}
+
+h1 {
+	align-self: end;
+	font-family: 'Uncial Antiqua', cursive;
+	font-size: 35px;
+}
+
+h2 {
+	text-align: center;
+	font-family: 'Uncial Antiqua', cursive;
+}
+
+#inputBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#container {
+	display: grid;
+	grid-template-columns: 20% 20% 20%;
+	grid-column-gap: 15px;
+	grid-row-gap: 15px;
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+
+input {
+	font-size: 25px;
+	margin: 5px;
+	font-family: 'Almendra', serif;
+}
+
+p {
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Almendra', serif;
+}
+
+button {
+	font-size: 25px;
+	padding: 5px;
+	font-family: 'Almendra', serif;
+}
+
+button:hover {
+	cursor: pointer;
+	background-color: #00AB39;
+}
+
+label {
+	font-size: 25px;
+	font-family: 'Almendra', serif;
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	cursor: pointer;
+	color: #00AB39;
+}
+
+#about {
+	margin: 50px;
+	padding-right: 75px;
+	padding-left: 75px;
+}
+
+.intro {
+	font-size: 23px;
+	margin-right: 75px;
+	margin-left: 75px;
+	float: center;
+	text-align: justify;
+}
+
+.footer {
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	margin-top: 30px;
+	font-size: 23px;
+	text-align: center;
+	font-family: 'Almendra', serif;
+}
+
+.flashcardButtons {
+	display: grid;
+	grid-template-columns: 20% 20% 20%;
+	grid-column-gap: 15px;
+	grid-row-gap: 15px;
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+
+.cards {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.card {
+	width: 400px;
+	height: 250px;
+	border: 1px solid black;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+#cardText {
+	font-family: 'Architects Daughter', cursive;
+	font-size: 25px;
+}
+
+#cardLabel {
+	font-family: 'Architects Daughter', cursive;
+}
+
+.navigatorButtons {
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-column-gap: 15px;
+	grid-row-gap: 15px;
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 30px;
+	justify-content: center;
+}
+
+@media screen and (max-width : 845px) {
+	#about {
+		margin-right: 20px;
+		margin-left: 20px;
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+	.intro {
+		margin-right: 20px;
+		margin-left: 20px;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	#container, .flashcardButtons {
+		grid-template-columns: 30% 30% 30%;
+	}
+	
+}
+
+@media screen and (max-width : 520px) {
+	.intro, input, label {
+		font-size: 20px;
+	}
+	h1 {
+		font-size: 25px;
+	}
+	.card {
+		width: 300px;
+		height: 188px;
+	}
+	#cardText, #cardLabel, button, p {
+		font-size: 15px;
+	}
+}
+@media screen and (max-width: 375px) {
+	h1 {
+		font-size: 20px;
+	}
+	img {
+		width: 150px;
+		height: 90px;
+	}
+	.header {
+		grid-template-columns: 155px auto;
+	}
+}

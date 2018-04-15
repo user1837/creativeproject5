@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link href="https://fonts.googleapis.com/css?family=Almendra|Architects+Daughter|Uncial+Antiqua" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles.css">
+    <title>Welsh Word Mutator</title>
+  </head>
+  <body>
+    <div id="app">
+    	<div class="header">
+    		<img src="welshflag.png" />
+    		<h1> Welsh Word Mutator </h1>
+    	</div>
+    	<hr>
+    	<div id="about">
+    		<p class="intro">Croeso! The Welsh Word Mutator is a tool for finding and memorizing the mutated forms of Welsh words. 
+    		Mutations in Welsh are systematic sound changes to the first letters of words that occur in specific syntactic and lexical environments. 
+    		There are three types of mutations: soft, nasal, and aspirate (for a full description of Welsh mutation rules, visit
+    		<a href="http://www.bbc.co.uk/wales/learnwelsh/pdf/welshgrammar_mutations.pdf"> this link</a>).
+    		To find a mutation, type the word into the Word box and click on the name of the mutation.</p>
+    		<p class="intro">To create a flashcard for a word, type the word into the Word box and click "Add to Flashcards." You can quiz yourself and check off and delete the words you've memorized.
+    		<p class="intro">Example words to try: ci, poptyping, tad, brawd, deintydd, gwdihw, mam, llyfrgell, rhan, smwddio, eisteddfod, ffrind, chwaer</p>
+    	</div>
+    	<div id="inputBox">
+    		<label> Word: </label>
+    		<input type="text" v-model="baseWord">
+    	</div>
+    	<div id="container">
+    		<button v-on:click="softlyMutate">Soft Mutation</button>
+    		<button v-on:click="nasallyMutate">Nasal Mutation</button>
+    		<button v-on:click="aspiratelyMutate">Aspirate Mutation</button>
+    		<div><p>{{ smWord }} </p></div>
+    		<div><p> {{ nmWord }} </p></div>
+   	 		<div><p>{{ amWord }} </p></div>
+   	 	</div>
+   	 	<h2>Flashcards</h2>
+   	 	<div class="flashcardButtons">
+   	 	<button v-on:click="addFlashcards">Add to Flashcards</button>
+   	 	<button v-on:click="startQuiz">Start Flashcards</button>
+   	 	<button v-on:click="deleteMemorized">Delete Memorized</button>
+   	 	</div>
+   	 	<div class="cards" v-if="showCards">
+   	 		<div class="card">
+   	 			<button v-on:click="deleteCard(currentCard)" class="delete">X</button>
+   	 			<p id="cardText"> {{ frontText }} </p>
+   	 			<input type="checkbox" v-model="currentCard.memorized" v-on:click="memorizeCard"/> <label id="cardLabel">Memorized </label>
+   	 		</div>
+   	 		<div class="navigatorButtons">
+   	 			<button v-on:click="getLast">Last</button>
+   	 			<button v-on:click="flip">Flip</button>
+   	 			<button v-on:click="getNext">Next</button>
+   	 		</div>
+   	 	</div>
+   	 	<hr>
+		<div class="footer">
+			<a href="https://github.com/user1837/creativeproject4.git">Github Repository</a>
+		</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js" integrity="sha256-pU9euBaEcVl8Gtg+FRYCtin2vKLN8sx5/4npZDmY2VA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
