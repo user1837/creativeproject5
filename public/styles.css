@@ -141,6 +141,18 @@ a:hover {
 	justify-content: center;
 }
 
+#login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.formButtons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
 @media screen and (max-width : 845px) {
 	#about {
 		margin-right: 20px;
@@ -158,7 +170,7 @@ a:hover {
 	#container, .flashcardButtons {
 		grid-template-columns: 30% 30% 30%;
 	}
-	
+
 }
 
 @media screen and (max-width : 520px) {

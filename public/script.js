@@ -1,6 +1,8 @@
 var app = new Vue({
 	el: '#app',
 	data: {
+		usernameInput: '',
+		passwordInput: '',
 		baseWord: '',
 		smWord: '',
 		nmWord: '',
@@ -11,6 +13,7 @@ var app = new Vue({
 		showFront: true,
 		endOfCards: true,
 		currentIndex: 0,
+		loggedIn: false,
 		id: 0
 	},
 	created: function() {

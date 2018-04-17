@@ -14,14 +14,29 @@
     	</div>
     	<hr>
     	<div id="about">
-    		<p class="intro">Croeso! The Welsh Word Mutator is a tool for finding and memorizing the mutated forms of Welsh words. 
-    		Mutations in Welsh are systematic sound changes to the first letters of words that occur in specific syntactic and lexical environments. 
+    		<p class="intro">Croeso! The Welsh Word Mutator is a tool for finding and memorizing the mutated forms of Welsh words.
+    		Mutations in Welsh are systematic sound changes to the first letters of words that occur in specific syntactic and lexical environments.
     		There are three types of mutations: soft, nasal, and aspirate (for a full description of Welsh mutation rules, visit
     		<a href="http://www.bbc.co.uk/wales/learnwelsh/pdf/welshgrammar_mutations.pdf"> this link</a>).
     		To find a mutation, type the word into the Word box and click on the name of the mutation.</p>
     		<p class="intro">To create a flashcard for a word, type the word into the Word box and click "Add to Flashcards." You can quiz yourself and check off and delete the words you've memorized.
     		<p class="intro">Example words to try: ci, poptyping, tad, brawd, deintydd, gwdihw, mam, llyfrgell, rhan, smwddio, eisteddfod, ffrind, chwaer</p>
     	</div>
+    <div id="userView">
+      <div v-if="loggedIn">
+        <p> Hello, {{ usernameInput }}! </p>
+        <button class="formButtons">Logout</button>
+      </div>
+      <form id="login" v-else>
+        <input type="text" v-model="usernameInput" placeholder="username">
+        <input type="text" v-model="passwordInput" placeholder="password">
+        <div class="formButtons">
+          <button>Register</button>
+          <button>Login</button>
+        </div>
+      </form>
+    </div>
+    <div id="mutationActivities" v-if="loggedIn">
     	<div id="inputBox">
     		<label> Word: </label>
     		<input type="text" v-model="baseWord">
@@ -53,6 +68,7 @@
    	 		</div>
    	 	</div>
    	 	<hr>
+    </div>
 		<div class="footer">
 			<a href="https://github.com/user1837/creativeproject4.git">Github Repository</a>
 		</div>
