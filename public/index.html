@@ -28,10 +28,10 @@
         <button class="formButtons">Logout</button>
       </div>
       <form id="login" v-else>
-        <input type="text" v-model="usernameInput" placeholder="username">
-        <input type="text" v-model="passwordInput" placeholder="password">
+        <input type="text" v-model="username" placeholder="username">
+        <input type="password" v-model="password" placeholder="password">
         <div class="formButtons">
-          <button>Register</button>
+          <button v-on:click="register">Register</button>
           <button>Login</button>
         </div>
       </form>

@@ -14,6 +14,10 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('./knexfile')[env];
 const db = require('knex')(config);
 
+// bcrypt setup
+let bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 //let flashcards = []; //array of flashcard objects
 //let id = 0;
 
@@ -76,6 +80,30 @@ app.delete('/api/flashcards/:id', (req, res) => {
   }
   flashcards.splice(removeIndex, 1);
   res.sendStatus(200);*/
+});
+
+app.post('/api/users', (req, res) => {
+  if (!req.body.username || !req.body.password)
+    return res.status(400).send("Missing username or password.");
+  db('users').where('username', req.body.username).first().then(user => {
+    if (user !== undefined) {
+      res.status(403).send("Username already exists.");
+      throw new Error('abort');
+    }
+    return bcrypt.hash(req.body.password, saltRounds);
+  }).then(hash => {
+    return db('users').insert({hash: hash, username: req.body.username});
+  }).then(ids => {
+    return db('users').where('id', ids[0]).first().select('id', 'username');
+  }).then(user => {
+    res.status(200).send(user);
+    return;
+  }).catch(error => {
+    if (error.message !== 'abort') {
+      console.log(error);
+      res.status(500).json({ error });
+    }
+  })
 });
 
 //Change port number for different apps

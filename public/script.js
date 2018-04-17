@@ -1,8 +1,8 @@
 var app = new Vue({
 	el: '#app',
 	data: {
-		usernameInput: '',
-		passwordInput: '',
+		username: '',
+		password: '',
 		baseWord: '',
 		smWord: '',
 		nmWord: '',
@@ -14,11 +14,12 @@ var app = new Vue({
 		endOfCards: true,
 		currentIndex: 0,
 		loggedIn: false,
+		currentUser: {},
 		id: 0
 	},
-	created: function() {
+	/*created: function() {
     	this.getFlashcards();
-  	},
+  	},*/
   	watch: {
     	flashcards: function(value,oldvalue) {
       		this.startQuiz();
@@ -203,7 +204,7 @@ var app = new Vue({
 			}
 			this.currentCard = this.flashcards[this.currentIndex];
 		},
-		getNext() {
+		getNext: function() {
 			this.showFront = true;
 			this.currentIndex = this.currentIndex + 1;
 			if (this.currentIndex >= this.flashcards.length) {
@@ -211,6 +212,18 @@ var app = new Vue({
 			} else {
 				this.currentCard = this.flashcards[this.currentIndex];
 			}
+		},
+		register: function() {
+			axios.post("http://localhost:3002/api/users", {
+				username: this.username,
+				password: this.password
+			}).then(response => {
+				this.currentUser = response.data;
+				this.loggedIn = true;
+				this.getFlashcards();
+				return true;
+			}).catch(err => {
+			});
 		}
 	}
 });
