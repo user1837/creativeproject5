@@ -15,13 +15,14 @@ var app = new Vue({
 		currentIndex: 0,
 		loggedIn: false,
 		currentUser: {},
-		id: 0
+		token: '',
 	},
 	/*created: function() {
     	this.getFlashcards();
-  	},*/
+  },*/
   	watch: {
     	flashcards: function(value,oldvalue) {
+					console.log("detected change");
       		this.startQuiz();
     	}
   	},
@@ -100,7 +101,8 @@ var app = new Vue({
 			}
 		},
 		getFlashcards: function() {
-      		axios.get("http://localhost:3002/api/flashcards").then(response => {
+					console.log("called");
+      		axios.get("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards").then(response => {
 						this.flashcards = response.data; //sends GET request to the URL and assigns the array in the response to items
 						return true;
       		}).catch(err => {
@@ -112,25 +114,31 @@ var app = new Vue({
     		this.amWord = '';
     	},
 		startQuiz: function() {
+			console.log("started quiz")
 			this.clearAnswers();
+			console.log("cleared answers")
 			this.showCards = true;
+			console.log("set showCards to true")
 			this.showFront = true;
+			console.log("set showFront to true")
 			if (this.flashcards.length > 0) {
+				console.log("There are cards for this user.");
 				this.endOfCards = false;
 				this.currentIndex = 0;
 				this.currentCard = this.flashcards[this.currentIndex];
+				//console.log(currentCard);
 			} else {
+				console.log("There are no cards for this user");
 				this.endOfCards = true;
 			}
 		},
 		addSMCard: function() {
 			this.softlyMutate();
-			axios.post("http://localhost:3002/api/flashcards", {
+			axios.post("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards", {
 				front_text: this.baseWord,
 				back_text: this.smWord,
 				card_header: "Soft Mutation of: ",
 				memorized: false,
-				user_id: this.id
 			}).then(response => {
 				this.getFlashcards();
 				return true;
@@ -139,12 +147,11 @@ var app = new Vue({
 		},
 		addNMCard: function() {
 			this.nasallyMutate();
-			axios.post("http://localhost:3002/api/flashcards", {
+			axios.post("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards", {
 				front_text: this.baseWord,
 				back_text: this.nmWord,
 				card_header: "Nasal Mutation of ",
 				memorized: false,
-				user_id: this.id
 			}).then(response => {
 				this.getFlashcards();
 				return true;
@@ -153,12 +160,11 @@ var app = new Vue({
 		},
 		addAMCard: function() {
 			this.aspiratelyMutate();
-			axios.post("http://localhost:3002/api/flashcards", {
+			axios.post("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards", {
 				front_text: this.baseWord,
 				back_text: this.amWord,
 				card_header: "Aspirate Mutation of ",
 				memorized: false,
-				user_id: this.id
 			}).then(response => {
 				this.getFlashcards();
 				return true;
@@ -214,7 +220,19 @@ var app = new Vue({
 			}
 		},
 		register: function() {
-			axios.post("http://localhost:3002/api/users", {
+			axios.post("http://localhost:3002/api/register", {
+				username: this.username,
+				password: this.password
+			}).then(response => {
+				this.currentUser = response.data.user;
+				this.loggedIn = true;
+				this.getFlashcards();
+				return true;
+			}).catch(err => {
+			});
+		},
+		login: function() {
+			axios.post("http://localhost:3002/api/login", {
 				username: this.username,
 				password: this.password
 			}).then(response => {
@@ -223,6 +241,7 @@ var app = new Vue({
 				this.getFlashcards();
 				return true;
 			}).catch(err => {
+
 			});
 		}
 	}

@@ -18,13 +18,15 @@ const db = require('knex')(config);
 let bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 //let flashcards = []; //array of flashcard objects
 //let id = 0;
 
 //if server gets a GET request at this URL it sends the array of items
-app.get('/api/flashcards', (req, res) => {
-  db('cards').select().from('cards').then(cards => {
-    res.send(cards);
+app.get('/api/users/:id/flashcards', (req, res) => {
+  let id = parseInt(req.params.id);
+  db('cards').where('user_id',id).select('front_text','back_text','card_header','memorized').then(cards => {
+    res.status(200).send(cards);
   }).catch(error => {
     //console.log(error);
     res.status(500).json({ error });
@@ -32,12 +34,17 @@ app.get('/api/flashcards', (req, res) => {
 });
 
 //if server gets POST request at this URL it reates and returns item
-app.post('/api/flashcards', (req, res) => {
-  db('cards').insert({front_text:req.body.front_text, back_text:req.body.back_text, card_header:req.body.card_header, memorized:req.body.memorized, user_id:req.body.user_id}).then(cards => {
-    res.status(200).json({id:cards[0]});
+app.post('/api/users/:id/flashcards', (req, res) => {
+  let id = parseInt(req.params.id);
+  db('users').where('id',id).first().then(user => {
+    return db('cards').insert({front_text:req.body.front_text, back_text:req.body.back_text, card_header:req.body.card_header, memorized:req.body.memorized, user_id:id});
+  }).then(ids => {
+    return db('cards').where('id',ids[0]).first();
+  }).then(card => {
+    res.status(200).send({front_text:card.front_text, back_text:card.back_text, card_header:card.card_header, memorized:card.memorized});
     return;
   }).catch(error => {
-    //console.log(error);
+    console.log(error);
     res.status(500).json({ error });
   });
   //id = id + 1;
@@ -82,7 +89,7 @@ app.delete('/api/flashcards/:id', (req, res) => {
   res.sendStatus(200);*/
 });
 
-app.post('/api/users', (req, res) => {
+app.post('/api/register', (req, res) => {
   if (!req.body.username || !req.body.password)
     return res.status(400).send("Missing username or password.");
   db('users').where('username', req.body.username).first().then(user => {
@@ -96,7 +103,30 @@ app.post('/api/users', (req, res) => {
   }).then(ids => {
     return db('users').where('id', ids[0]).first().select('id', 'username');
   }).then(user => {
-    res.status(200).send(user);
+    res.status(200).send({id:user.id, username:user.username});
+    return;
+  }).catch(error => {
+    if (error.message !== 'abort') {
+      console.log(error);
+      res.status(500).json({ error });
+    }
+  })
+});
+
+app.post('/api/login', (req, res) => {
+  if (!req.body.username || !req.body.password)
+    return res.status(400).send("Missing username or password");
+  db('users').where('username', req.body.username).first().then(user => {
+    if (user === undefined) {
+      res.status(403).send("Invalid credentials");
+      throw new Error('abort');
+    }
+    return [bcrypt.compare(req.body.password, user.hash), user];
+  }).spread((result, user) => {
+    if (result)
+      res.status(200).send({id:user.id, username:user.username});
+    else
+      res.status(403).send("Invalid credentials");
     return;
   }).catch(error => {
     if (error.message !== 'abort') {

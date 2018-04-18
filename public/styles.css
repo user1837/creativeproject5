@@ -153,6 +153,10 @@ a:hover {
 	align-items: center;
 }
 
+#logoutButton {
+	float: center;
+}
+
 @media screen and (max-width : 845px) {
 	#about {
 		margin-right: 20px;
