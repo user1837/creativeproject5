@@ -23,9 +23,9 @@
     		<p class="intro">Example words to try: ci, poptyping, tad, brawd, deintydd, gwdihw, mam, llyfrgell, rhan, smwddio, eisteddfod, ffrind, chwaer</p>
     	</div>
     <div id="userView">
-      <div v-show="loggedIn">
+      <div id="loggedInView" v-show="loggedIn">
         <p> Hello, {{ username }}! </p>
-        <button id="logoutButton">Logout</button>
+        <button id="logoutButton" v-on:click="logout">Logout</button>
       </div>
       <div id="login" v-show="!loggedIn">
         <input type="text" v-model="username" placeholder="username">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div id="mutationActivities">
+    <div id="mutationActivities" v-show="loggedIn">
     	<div id="inputBox">
     		<label> Word: </label>
     		<input type="text" v-model="baseWord">

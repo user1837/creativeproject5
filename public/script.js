@@ -245,6 +245,12 @@ var app = new Vue({
 			}).catch(err => {
 
 			});
+		},
+		logout: function() {
+			this.username = '';
+			this.password = '';
+			this.token = '';
+			this.loggedIn = false;
 		}
 	}
 });
