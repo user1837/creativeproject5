@@ -176,7 +176,7 @@ var app = new Vue({
 			this.addAMCard();
 		},
 		memorizeCard: function() {
-			axios.put("http://localhost:3002/api/users" + this.currentUser.id + "/flashcards/" + this.currentCard.id, {
+			axios.put("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards/" + this.currentCard.id, {
 				front_text: this.currentCard.front_text,
 				back_text: this.currentCard.back_text,
 				card_header: this.currentCard.card_header,
@@ -195,7 +195,7 @@ var app = new Vue({
 			});
 		},
 		deleteCard: function(card) {
-			axios.delete("http://localhost:3002/api/flashcards/" + card.id).then(response => {
+			axios.delete("http://localhost:3002/api/users/" + this.currentUser.id + "/flashcards/" + card.id).then(response => {
 				this.getFlashcards();
 				return true;
 			}).catch(err => {

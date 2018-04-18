@@ -25,7 +25,7 @@ const saltRounds = 10;
 //if server gets a GET request at this URL it sends the array of items
 app.get('/api/users/:id/flashcards', (req, res) => {
   let id = parseInt(req.params.id);
-  db('cards').where('user_id',id).select('front_text','back_text','card_header','memorized').then(cards => {
+  db('cards').where('user_id',id).select('id','front_text','back_text','card_header','memorized').then(cards => {
     res.status(200).send(cards);
   }).catch(error => {
     //console.log(error);
@@ -41,7 +41,7 @@ app.post('/api/users/:id/flashcards', (req, res) => {
   }).then(ids => {
     return db('cards').where('id',ids[0]).first();
   }).then(card => {
-    res.status(200).send({front_text:card.front_text, back_text:card.back_text, card_header:card.card_header, memorized:card.memorized});
+    res.status(200).send({id:card.id,front_text:card.front_text, back_text:card.back_text, card_header:card.card_header, memorized:card.memorized});
     return;
   }).catch(error => {
     console.log(error);
@@ -74,9 +74,10 @@ app.put('/api/users/:id/flashcards/:card_id', (req, res) => { //colon means that
   res.send(item);*/
 });
 
-app.delete('/api/flashcards/:id', (req, res) => {
+app.delete('/api/users/:id/flashcards/:card_id', (req, res) => {
   let id = parseInt(req.params.id);
-  db('cards').where('id', id).del().then(cards => {
+  let card_id = parseInt(req.params.card_id);
+  db('cards').where('id', card_id).del().then(cards => {
     res.sendStatus(200);
   }).catch(error => {
     res.status(500).json({ error });
