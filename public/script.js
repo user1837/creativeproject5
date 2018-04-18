@@ -126,7 +126,6 @@ var app = new Vue({
 				this.endOfCards = false;
 				this.currentIndex = 0;
 				this.currentCard = this.flashcards[this.currentIndex];
-				//console.log(currentCard);
 			} else {
 				console.log("There are no cards for this user");
 				this.endOfCards = true;
@@ -177,10 +176,13 @@ var app = new Vue({
 			this.addAMCard();
 		},
 		memorizeCard: function() {
-			axios.put("http://localhost:3002/api/flashcards/" + this.currentCard.id, {
-				memorized: !this.currentCard.memorized,
+			axios.put("http://localhost:3002/api/users" + this.currentUser.id + "/flashcards/" + this.currentCard.id, {
+				front_text: this.currentCard.front_text,
+				back_text: this.currentCard.back_text,
+				card_header: this.currentCard.card_header,
+				memorized: !this.currentCard.memorized
 			}).then(response => {
-				this.getFlashcards();
+				//this.getFlashcards();
 				return true;
 			}).catch(err => {
 			});

@@ -54,10 +54,11 @@ app.post('/api/users/:id/flashcards', (req, res) => {
 });
 
 //updates item
-app.put('/api/flashcards/:id', (req, res) => { //colon means that there is number following it
+app.put('/api/users/:id/flashcards/:card_id', (req, res) => { //colon means that there is number following it
   let id = parseInt(req.params.id);
-  db('cards').where('id', id).update({memorized:req.body.memorized}).then(cards => {
-    res.status(200).json({id:cards[0]});
+  let card_id = parseInt(req.params.card_id);
+  db('cards').where('id', card_id).update({front_text:req.body.front_text, back_text:req.body.back_text, card_header:req.body.card_header,memorized:req.body.memorized, user_id:id}).then(cards => {
+    res.status(200).json({cards:cards});
     return;
   }).catch(error => {
     //conosle.log(error);
